@@ -1,0 +1,32 @@
+\chapter{Graph}
+
+\section{Theorems}
+{\footnotesize\textbf{Konig's Theorem} In any bipartite graph, $\abs{\text{max flow}} = \abs{\text{max matching}} = \abs{\text{min vertex cover}}$. Also, $V - \abs{\text{max indep set}}$.
+
+In any graph without isolated vertices, $\abs{\text{min edge cover}} + \abs{\text{max matching}} = V$
+
+$\Rightarrow$ For bipartite graph of no isolated edge,  $\abs{\text{min edge cover}} = \abs{\text{max indep set}}$
+
+\textbf{Flow complexity} When all edges are unit capacities (or more generally for all intermediate vertices, there are one in/out edge of unit capacity), Dinic's algorithm runs in $O(E \min(V^{2/3}, E^{1/2}))$}
+
+\section{Articulation}
+    \kactlimport{ArficulationEdge.h}
+    \kactlimport{ArticulationPoint.h}
+\section{Strongly Connected Component}
+    \kactlimport{SCC-Kosaraju.h}
+    \kactlimport{SCC-Tarjan.h}
+\section{Biconnected Component}
+    \kactlimport{BCC.h}
+\section{Network Flow}
+    \kactlimport{BipartiteMatch.h}
+    \kactlimport{MaximumFlow.h}
+    \kactlimport{MCMF.h}
+    {\footnotesize
+	\textbf{L-R MaxFlow} (1) MCMF solution. For edge (a$\to$b) with bound $[l, r]$, make two edges as $(l, -1), (r-l ,0)$. MCMF forces flow to remaining $-1$ edges. COST : is there possible lr-flow. FLOW : actual lr-flow. (2) Dinic solution. Make new SRC and SNK. Make (SNK, SRC, INF) edge. For edge (a$\to$b) with bound $[l, r]$, make $(a \to \text{NEWSNK}, l)$, $(\text{NEWSRC} \to b, l)$, $(a\to b, r-l)$. Is sum of maxflow $\text{NEWSRC} \to \text{NEWSNK}$ equal to sum of $l$? To find actual flow, run dinic again with original SRC-SNK (without resetting).}
+\section{Minimum Distance}
+    \kactlimport{Dijkstra.h}
+    \kactlimport{SPFA.h}
+\section{Tree}
+    \kactlimport{Centriod.h}
+    \kactlimport{HLD.h}
+    \kactlimport{LCA.h}
