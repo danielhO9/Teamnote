@@ -19,7 +19,8 @@ vector<ll> spfa(int src, int V) {
 	q.push(src); inQ[src] = true;
 	while (!q.empty()) {
 		int here = q.front(); q.pop(); inQ[here] = false;
-		for (auto [there, cost]: adj[here]) if (dist[there] > dist[here] + cost) {
+		for (auto [there, cost]: adj[here])
+		  if (dist[there] > dist[here] + cost) {
 			dist[there] = dist[here] + cost;
 			if (!inQ[there]) {
 				++cycleCnt[there];

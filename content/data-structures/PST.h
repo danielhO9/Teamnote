@@ -23,7 +23,8 @@ struct PST {
 		tree.push_back(Node{tree[root[p]]});
         return;
 	}
-	void update(int node, int start, int end, int index, ll val) {
+	void update(int node, int start, int end,
+	  int index, ll val) {
 		if (index < start || index > end) return;
 		tree[node].val += val;
 		if (start == end) return;
@@ -53,8 +54,11 @@ struct PST {
         if (start == end) return start;
         ll tmp = tree[tree[r].l].val - tree[tree[l].l].val;
         int mid = (start + end) / 2;
-        if (tmp >= k) return kth(tree[l].l, tree[r].l, start, mid, k);
-        else return kth(tree[l].r, tree[r].r, mid + 1, end, k - tmp);
+        if (tmp >= k)
+          return kth(tree[l].l, tree[r].l, start, mid, k);
+        else
+          return kth(tree[l].r, tree[r].r,
+                     mid + 1, end, k - tmp);
     }
     void update(int rt, int index, ll val) {
         assert(rt < root.size());

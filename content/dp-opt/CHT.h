@@ -22,7 +22,9 @@ struct cht{
         ++e;
     }
     ll query(ll x){
-        while(s+1<e && f[s+1].y-f[s].y <= x*(f[s].x-f[s+1].x)) ++s;
+        while(s+1<e
+          && f[s+1].y-f[s].y <= x*(f[s].x-f[s+1].x))
+            ++s;
         return f[s].x * x + f[s].y;
     }
 } CHT;

@@ -30,23 +30,22 @@ void fft(vector<base>& a, bool inv) {
     }
 }
 
-vector<ll> multiply(vector<ll>& A, vector<ll>& B) {
-    vector<base> a(A.begin(), A.end()), b(B.begin(), B.end());
+vector<ll> multiply(const vector<ll>& A, const vector<ll>& B) {
+    if (A.empty() || B.empty()) return {};
+    vector<base> f(A.begin(), A.end()), g(B.begin(), B.end());
 
-    ll n = max(a.size(), b.size());
-    ll i = 0;
-    while ((1 << i) < (n << 1)) i++;
-    n = 1 << i;
-    a.resize(n);
-    b.resize(n);
+    int sz = f.size() + g.size() - 1;
+    
+    int n = 1;
+    while (n < sz) n <<= 1;
+    f.resize(n); g.resize(n);
 
-    fft(a, false);
-    fft(b, false);
-    for (ll i = 0; i < n; i++) a[i] *= b[i];
-    fft(a, true);
+    fft(f, false); fft(g, false);
+    for (int i = 0; i < n; ++i) f[i] = f[i] * g[i];
+    fft(f, true);
 
-    vector<ll> ret;
-    for (auto i: a) ret.push_back((ll) round(i.real()));
-	while (ret.back() == 0) ret.pop_back();
-    return ret;
+    vector<ll> result(sz);
+    for (int i = 0; i < sz; ++i)
+      result[i] = llround(f[i].real());
+    return result;
 }

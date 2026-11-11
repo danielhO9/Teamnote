@@ -20,11 +20,9 @@ __int128_t pow(__int128_t a, __int128_t b, __int128_t MOD) {
 }
 
 bool millerRabin(__int128_t n) {
+	if (n < 2) return false;
+	if (n % 2 == 0) return n == 2;
 	int type = (n > INT32_MAX);
-	if (type == 1 && n < 40) {
-		for (auto i: a[type]) if (i == n) return true;
-		return false;
-	}
 	for (int i = 0; i < a[type].size(); ++i) {
 		if (a[type][i] == n) return true;
 		__int128_t k = n - 1;

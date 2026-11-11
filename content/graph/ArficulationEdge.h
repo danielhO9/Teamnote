@@ -16,7 +16,8 @@ void dfs(vector<pair<int, int>>& ret, int v, int p) {
         if (ord[u]) low[v] = min(low[v], ord[u]);
         else {
             dfs(ret, u, v);
-            if (low[u] > ord[v]) ret.push_back(make_pair(min(v, u), max(v, u)));
+            if (low[u] > ord[v])
+              ret.push_back(make_pair(min(v, u), max(v, u)));
 			low[v] = min(low[u], low[v]);
         }
     }

@@ -16,7 +16,8 @@ struct Edge {
 const int MAX_V = 502;
 vector<Edge> adj[MAX_V];
 
-void spfa(vector<int>& parent, vector<int>& ind, vector<bool>& inQ, vector<ll>& dis, int source) {
+void spfa(vector<int>& parent, vector<int>& ind,
+  vector<bool>& inQ, vector<ll>& dis, int source) {
 	for (auto& i: parent) i = -1;
 	for (int i = 0; i < inQ.size(); ++i) inQ[i] = false;
 	for (auto& i: dis) i = INF;
@@ -28,7 +29,8 @@ void spfa(vector<int>& parent, vector<int>& ind, vector<bool>& inQ, vector<ll>& 
 		for (int i = 0; i < adj[here].size(); ++i) {
 			Edge& edge = adj[here][i];
 			int there = edge.vertex;
-			if (edge.capacity - edge.flow > 0 && dis[there] > dis[here] + edge.cost) {
+			if (edge.capacity - edge.flow > 0
+			  && dis[there] > dis[here] + edge.cost) {
 				dis[there] = dis[here] + edge.cost;
 				parent[there] = here;
 				ind[there] = i;

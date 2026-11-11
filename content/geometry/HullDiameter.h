@@ -13,8 +13,11 @@ pair<Point<T>, Point<T>> hullDiameter(vector<Point<T>>& pts) {
 	int j = 1;
 	for (int i = 0; i < j; ++i) {
 		while (true) {
-			res = max(res, {(pts[i] - pts[j]).dist2(), {pts[i], pts[j]}});
-			if ((pts[(j + 1) % n] - pts[j]).cross(pts[i + 1] - pts[i]) >= 0) break;
+			res = max(res,
+			  {(pts[i] - pts[j]).dist2(), {pts[i], pts[j]}});
+			if ((pts[(j + 1) % n] - pts[j])
+			        .cross(pts[i + 1] - pts[i]) >= 0)
+			  break;
 			j = (j + 1) % n;
 		}
 	}

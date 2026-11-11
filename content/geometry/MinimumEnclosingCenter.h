@@ -7,7 +7,8 @@ template<typename T>
 Circle<T> mec(vector<Point<T>> pts) {
 	shuffle(pts.begin(), pts.end(), mt19937(time(0)));
 	Circle<T> c = {pts[0], 0};
-	for (int i = 0; i < pts.size(); ++i) if (!c.inCircle(pts[i])) {
+	for (int i = 0; i < pts.size(); ++i)
+	  if (!c.inCircle(pts[i])) {
 		c = {pts[i], 0};
 		for (int j = 0; j < i; ++j) if (!c.inCircle(pts[j])) {
 			c.c = (pts[i] + pts[j]) / 2;

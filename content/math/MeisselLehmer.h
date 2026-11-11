@@ -17,11 +17,14 @@ void init() {
     isPrime[2] = true;
     for (int i = 3; i < MAXV; i += 2) isPrime[i] = true;
     int threshold = INT32_MAX / 3;
-    for (int i = 3; i < MAXV; i += 2) if (isPrime[i] && i <= threshold) {
-        for (int j = i * 3; j < MAXV; j += (i << 1)) isPrime[j] = false;
+    for (int i = 3; i < MAXV; i += 2)
+      if (isPrime[i] && i <= threshold) {
+        for (int j = i * 3; j < MAXV; j += (i << 1))
+          isPrime[j] = false;
         p.push_back(i);
     }
-    for (int i = 2; i < MAXV; ++i) pi[i] = pi[i - 1] + isPrime[i];
+    for (int i = 2; i < MAXV; ++i)
+      pi[i] = pi[i - 1] + isPrime[i];
 }
 
 struct Node {
@@ -36,8 +39,14 @@ bool arr[MAXV2];
 int tree[MAXLEAF];
 Node leaf[MAXLEAF];
 
-void update(int i, int dif) { while (i < sz) { tree[i] += dif; i += (i & -i); } }
-int query(int i) { int ret = 0; while (i > 0) { ret += tree[i]; i -= (i & -i); } return ret; }
+void update(int i, int dif) {
+    while (i < sz) { tree[i] += dif; i += (i & -i); }
+}
+int query(int i) {
+    int ret = 0;
+    while (i > 0) { ret += tree[i]; i -= (i & -i); }
+    return ret;
+}
 
 ll phi(const ll x, const int a) {
     ll ret = 0;
@@ -80,7 +89,8 @@ ll phi(const ll x, const int a) {
         while (pidx < cur.b) {
             ++pidx;
             vidx = 0, dif = 0;
-            for (int j = p[pidx]; j <= limn[i]; j += p[pidx]) if (!arr[j]) {
+            for (int j = p[pidx]; j <= limn[i]; j += p[pidx])
+              if (!arr[j]) {
                 arr[j] = true;
                 if (v[vidx] < j && dif) {
                     update(vidx + 1, dif);
@@ -91,7 +101,8 @@ ll phi(const ll x, const int a) {
             }
             if (dif) update(vidx + 1, dif);
         }
-        int idx = lower_bound(v.begin(), v.end(), cur.n) - v.begin();
+        int idx =
+          lower_bound(v.begin(), v.end(), cur.n) - v.begin();
         ret += (cur.n - query(idx + 1)) * cur.sgn;
     }
     return ret;
@@ -102,6 +113,7 @@ ll getPi(ll x) {
     int c = cbrt(0.5 + x), s = sqrt(0.5 + x);
     int a = pi[c];
     ll ret = phi(x, a) + a - 1;
-    for (int i = a + 1; i <= pi[s]; ++i) ret -= getPi(x / p[i]) - i + 1;
+    for (int i = a + 1; i <= pi[s]; ++i)
+      ret -= getPi(x / p[i]) - i + 1;
     return ret;
 }

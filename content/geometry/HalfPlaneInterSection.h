@@ -15,9 +15,13 @@ vector<Point<T>> hpi(vector<Line<T>> lines) {
 	sort(lines.begin(), lines.end());
 	deque<Line<T>> dq;
 	for (int i = 0; i < lines.size(); ++i) {
-		while(dq.size() >= 2 && bad(dq[(int) dq.size() - 2], dq.back(), lines[i])) dq.pop_back();
-		while(dq.size() >= 2 && bad(dq[0], dq[1], lines[i])) dq.pop_front();
-		if (dq.size() < 2 || !bad(dq.back(), lines[i], dq[0])) dq.push_back(lines[i]);
+		while (dq.size() >= 2 &&
+		       bad(dq[(int)dq.size() - 2], dq.back(), lines[i]))
+		  dq.pop_back();
+		while(dq.size() >= 2 && bad(dq[0], dq[1], lines[i]))
+		  dq.pop_front();
+		if (dq.size() < 2 || !bad(dq.back(), lines[i], dq[0]))
+		  dq.push_back(lines[i]);
 	}
 	vector<Point<T>> ret;
 	if (dq.size() >= 3) for (int i = 0; i < dq.size(); ++i) {

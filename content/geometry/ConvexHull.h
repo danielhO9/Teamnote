@@ -9,7 +9,8 @@ vector<P> convexHull(vector<P> pts) {
 	sort(pts.begin(), pts.end());
 	P unit = pts[0];
 	for (auto& i: pts) i = i - unit;
-	sort(next(pts.begin()), pts.end(), [](const P& a, const P& b) {
+	sort(next(pts.begin()), pts.end(),
+	  [](const P& a, const P& b) {
 		if (a.cross(b) == 0) {
 			if (a.x == b.x) return a.y < b.y;
 			return a.x < b.x;

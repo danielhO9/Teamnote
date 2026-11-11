@@ -10,13 +10,17 @@ struct TrieNode {
 	TrieNode* children[ALPHABETS];
 	bool terminal;
 
-	TrieNode(): terminal(false) { memset(children, 0, sizeof(children)); }
-	~TrieNode() { for (int i = 0; i < ALPHABETS; ++i) if (children[i]) delete children[i]; }
+	TrieNode(): terminal(false) {
+	  memset(children, 0, sizeof(children)); }
+	~TrieNode() {
+	  for (int i = 0; i < ALPHABETS; ++i)
+	    if (children[i]) delete children[i]; }
 	void insert(const string& s, int idx = 0) {
 		if (idx == s.size()) terminal = true;
 		else {
 			int next = toNumber(s[idx]);
-			if (children[next] == nullptr) children[next] = new TrieNode();
+			if (children[next] == nullptr)
+			  children[next] = new TrieNode();
 			children[next]->insert(s, idx + 1);
 		}
 	}
@@ -29,7 +33,8 @@ struct TrieNode {
 	bool erase(const string& s, int idx = 0) {
 		if (idx == s.size()) {
 			terminal = false;
-			for (int i = 0; i < ALPHABETS; ++i) if (children[i]) return false;
+			for (int i = 0; i < ALPHABETS; ++i)
+			  if (children[i]) return false;
 			return true;
 		}
 		int next = toNumber(s[idx]);
@@ -39,7 +44,8 @@ struct TrieNode {
 			children[next] = nullptr;
 		}
 		if (terminal) return false;
-		for (int i = 0; i < ALPHABETS; ++i) if (children[i]) return false;
+		for (int i = 0; i < ALPHABETS; ++i)
+		  if (children[i]) return false;
 		return true;
 	}
 };

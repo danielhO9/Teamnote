@@ -5,7 +5,8 @@
  */
 const ll MOD = 998244353;
 
-vector<ll> basic_multiply_vec(const vector<ll> &x, const vector<ll> &y) {
+vector<ll> basic_multiply_vec(const vector<ll> &x,
+  const vector<ll> &y) {
 	vector<ll> ret(x.size() + y.size() + 1, 0);
 	for (ll i = 0; i < x.size(); ++i) {
 		for (ll j = 0; j < y.size(); ++j) {
@@ -16,7 +17,8 @@ vector<ll> basic_multiply_vec(const vector<ll> &x, const vector<ll> &y) {
 	return ret;
 }
 
-vector<ll> add(const vector<ll> &x, const vector<ll> &y, ll jump, ll times) {
+vector<ll> add(const vector<ll> &x, const vector<ll> &y,
+  ll jump, ll times) {
 	ll sz = max((ll)x.size(), (ll)y.size() + jump) + 2;
 	vector<ll> ret = vector<ll>(x.begin(), x.end());
 	while (ret.size() < sz) ret.push_back(0);
@@ -29,18 +31,23 @@ vector<ll> add(const vector<ll> &x, const vector<ll> &y, ll jump, ll times) {
 	return ret;
 }
 
-vector<ll> karatsuba_multiply_vec(const vector<ll> &x, const vector<ll> &y) {
+vector<ll> karatsuba_multiply_vec(const vector<ll> &x,
+  const vector<ll> &y) {
 	ll sz = max(x.size(), y.size());
 	if (sz <= 100) return basic_multiply_vec(x, y);
 	ll m = sz / 2;
 
 	// x = x0 + x1 * (10 ** m)
-	vector<ll> x0 = vector<ll>(x.begin(), x.begin() + min((ll)x.size(), m));
-	vector<ll> x1 = vector<ll>(x.begin() + min((ll)x.size(), m), x.end());
+	vector<ll> x0 = vector<ll>(
+	  x.begin(), x.begin() + min((ll)x.size(), m));
+	vector<ll> x1 = vector<ll>(
+	  x.begin() + min((ll)x.size(), m), x.end());
 
 	// y = y0 + y1 * (10 ** m)
-	vector<ll> y0 = vector<ll>(y.begin(), y.begin() + min((ll)y.size(), m));
-	vector<ll> y1 = vector<ll>(y.begin() + min((ll)y.size(), m), y.end());
+	vector<ll> y0 = vector<ll>(
+	  y.begin(), y.begin() + min((ll)y.size(), m));
+	vector<ll> y1 = vector<ll>(
+	  y.begin() + min((ll)y.size(), m), y.end());
 
 	// z2 = x1 * y1
 	vector<ll> z2 = karatsuba_multiply_vec(x1, y1);

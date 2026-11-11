@@ -23,7 +23,8 @@ bool bfs(int source, int sink, vector<int>& level) {
         int here = q.front(); q.pop();
 		for (Edge& edge: adj[here]) {
 			int there = edge.vertex;
-			if (level[there] == -1 && edge.capacity - edge.flow > 0) {
+			if (level[there] == -1
+			  && edge.capacity - edge.flow > 0) {
 				q.push(there);
                 level[there] = level[here] + 1;
             }
@@ -32,13 +33,17 @@ bool bfs(int source, int sink, vector<int>& level) {
 	return level[sink] != -1;
 }
 
-ll dfs(int here, int sink, ll amount, vector<int>& level, vector<int>& work) {
+ll dfs(int here, int sink, ll amount,
+  vector<int>& level, vector<int>& work) {
     if (here == sink) return amount;
 	for (int& i = work[here]; i < adj[here].size(); ++i){
         Edge& edge = adj[here][i];
 		int there = edge.vertex;
-		if (level[there] == level[here] + 1 && edge.capacity - edge.flow > 0) {
-            ll ret = dfs(there, sink, min(edge.capacity - edge.flow, amount), level, work);
+		if (level[there] == level[here] + 1
+		  && edge.capacity - edge.flow > 0) {
+            ll ret = dfs(there, sink,
+              min(edge.capacity - edge.flow, amount),
+                level, work);
 			if (ret > 0) {
                 edge.flow += ret;
 				adj[there][edge.reverse].flow -= ret;
@@ -57,7 +62,8 @@ ll networkFlow(int source, int sink, int V) {
     while (bfs(source, sink, level)) {
         for (auto& i: work) i = 0;
 		while (true) {
-            ll amount = dfs(source, sink, INT32_MAX, level, work);
+            ll amount = dfs(source, sink,
+              INT32_MAX, level, work);
             if (amount == 0) break;
             totalFlow += amount;
         }

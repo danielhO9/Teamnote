@@ -7,6 +7,7 @@ template<typename T>
 T polygonArea2(const vector<Point<T>>& pts) {
 	assert(!pts.empty());
 	T ret = pts.back().cross(pts[0]);
-	for (int i = 0; i + 1 < pts.size(); ++i) ret += pts[i].cross(pts[i + 1]);
+	for (int i = 0; i + 1 < pts.size(); ++i)
+	  ret += pts[i].cross(pts[i + 1]);
 	return abs(ret);
 }

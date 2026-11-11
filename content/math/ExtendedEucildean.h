@@ -3,6 +3,8 @@
  *  Returns gcd(a, b) along with x and y.
  * Time: $O(\log \min(a, b))$.
  */
+#pragma once
+
 tuple<ll, ll, ll> extended_euclidean(ll a, ll b) {
     if (b == 0) return {a, 1, 0};
     auto [g, x, y] = extended_euclidean(b, a % b);

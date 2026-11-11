@@ -24,7 +24,8 @@ void idfs(vector<vector<int>>& ret, int v) {
 // V: maximum vertex + 1
 vector<vector<int>> getScc(int V) {
 	const int s = 1; // 1-index
-	for (int u = s; u < V; ++u) for (auto v: adj[u]) iadj[v].push_back(u);
+	for (int u = s; u < V; ++u)
+	  for (auto v: adj[u]) iadj[v].push_back(u);
 	vector<int> ord;
 	for (int i = s; i < V; ++i) if (!vis[i]) dfs(ord, i);
 	reverse(ord.begin(), ord.end());

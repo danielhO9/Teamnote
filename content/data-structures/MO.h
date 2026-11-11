@@ -16,7 +16,8 @@ void del(int idx, bool last);
 void solve() {
 	vector<Query> query;
 	sqrtN = sqrt(N);
-	sort(query.begin(), query.end(), [](const Query& a, const Query& b) {
+	sort(query.begin(), query.end(),
+	  [](const Query& a, const Query& b) {
 		if (a.s / sqrtN == b.s / sqrtN) return a.e < b.e;
 		return a.s / sqrtN < b.s / sqrtN;
 	});

@@ -14,12 +14,14 @@ struct Fenwick2D {
     }
     void update(int y, int x, ll dif) {
         for (int i = y; i < n; i += (i & -i))
-            for (int j = x; j < m; j += (j & -j)) tree[i][j] += dif;
+            for (int j = x; j < m; j += (j & -j))
+              tree[i][j] += dif;
     }
     ll query(int y, int x) {
         ll ret = 0;
         for (int i = y; i; i -= (i & -i))
-            for (int j = x; j; j -= (j & -j)) ret += tree[i][j];
+            for (int j = x; j; j -= (j & -j))
+              ret += tree[i][j];
         return ret;
     }
 };

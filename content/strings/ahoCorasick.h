@@ -11,13 +11,17 @@ struct TrieNode {
 	TrieNode* failure;
 	bool terminal;
 
-	TrieNode(): terminal(false) { memset(children, 0, sizeof(children)); }
-	~TrieNode() { for (int i = 0; i < ALPHABETS; ++i) if (children[i]) delete children[i]; }
+	TrieNode(): terminal(false) {
+	  memset(children, 0, sizeof(children)); }
+	~TrieNode() {
+	  for (int i = 0; i < ALPHABETS; ++i)
+	    if (children[i]) delete children[i]; }
 	void insert(const string& s, int idx = 0) {
 		if (idx == s.size()) terminal = true;
 		else {
 			int next = toNumber(s[idx]);
-			if (children[next] == nullptr) children[next] = new TrieNode();
+			if (children[next] == nullptr)
+			  children[next] = new TrieNode();
 			children[next]->insert(s, idx + 1);
 		}
 	}
@@ -38,10 +42,12 @@ void getFailure(TrieNode* trie) {
 	}
 	while(!Q.empty()) {
 		TrieNode* here = Q.front(); Q.pop();
-		for (int i = 0; i < ALPHABETS; ++i) if (here->children[i]) {
+		for (int i = 0; i < ALPHABETS; ++i)
+		  if (here->children[i]) {
 			TrieNode* there = here->children[i];
 			TrieNode* p = here->failure;
-			while (p != trie && p->children[i] == nullptr) p = p->failure;
+			while (p != trie && p->children[i] == nullptr)
+			  p = p->failure;
 			if (p->children[i]) p = p->children[i];
 			there->failure = p;
 			if (p->terminal) there->terminal = true;
@@ -55,7 +61,8 @@ bool query(string& s, TrieNode* trie) {
 	TrieNode* p = trie;
 	for (auto& i: s) {
 		int next = toNumber(i);
-		while (p != trie && p->children[next] == nullptr) p = p->failure;
+		while (p != trie && p->children[next] == nullptr)
+		  p = p->failure;
 		if (p->children[next]) p = p->children[next];
 		if (p->terminal) return true;
 	}

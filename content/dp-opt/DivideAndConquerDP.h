@@ -23,7 +23,8 @@ void compute(int l, int r, int optl, int optr) {
     pair<ll, int> best = {LLONG_MAX, -1};
 
     for (int k = optl; k <= min(mid, optr); k++) {
-        best = min(best, {(k ? dp_before[k - 1] : 0) + C(k, mid), k});
+        best = min(best,
+          {(k ? dp_before[k - 1] : 0) + C(k, mid), k});
     }
 
     dp_cur[mid] = best.first;

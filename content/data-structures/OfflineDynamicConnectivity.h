@@ -1,9 +1,10 @@
 /**
  * Description: Offline Dynamic Connectivity using a segment tree and rollbackable Union-Find.
- *  Handles edge additions/removals and connectivity queries offline.
- *  The timeline of queries and edge updates is divided using a segment tree.
- *  A rollbackable Union-Find data structure is used to maintain connectivity information.
- * Time: $O(Q \log Q \cdot \alpha(N))$, where $Q$ is the number of queries/updates and $N$ is the number of vertices.
+ *  Supply N vertices, Q time steps, and bridges with inclusive active intervals.
+ *  An edge added at s and removed at t has interval [s,t-1]; use Q-1 if never removed.
+ *  Set queries[t] to a vertex pair or (-1,-1) for no query. After solve(),
+ *  ans[t] is 1 if connected, 0 if disconnected, or -1 for no query.
+ * Time: $O(N + (I \log(2Q) + Q)\log(2N))$ for $I$ active intervals.
  */
 
 // 0-index
@@ -12,10 +13,10 @@ struct UF {
     vector<tuple<int, int, int>> st;
 
     UF() = default;
-	UF(int _sz) {
-		par.resize(_sz);
-		rk.resize(_sz);
-		for (int i = 0; i < _sz; ++i) par[i] = i;
+	UF(int sz) {
+		par.resize(sz);
+		rk.resize(sz);
+		for (int i = 0; i < sz; ++i) par[i] = i;
 	}
     int time() { return st.size(); }
     void rollback(int t) {
@@ -44,17 +45,18 @@ struct Edge {
 	int u, v, s, e;
 };
 
+vector<Edge> bridges;
 vector<vector<Edge>> tree;
 vector<pair<int, int>> queries;
 vector<int> ans;
 
-void update(int node, int start, int end, Edge e) {
+void update(int node, int start, int end, const Edge& e) {
     if (e.s > end || e.e < start) return;
     if (e.s <= start && end <= e.e) {
         tree[node].push_back(e);
         return;
     }
-	int mid = (start + end) / 2;
+	int mid = (start + end) >> 1;
     update(node * 2, start, mid, e);
     update(node * 2 + 1, mid + 1, end, e);
 }
@@ -63,9 +65,10 @@ void dnc(int node, int start, int end) {
     int t = uf.time();
 	for (auto i: tree[node]) uf.merge(i.u, i.v);
 	if (start == end) {
-        if (uf.find(queries[start].first) == uf.find(queries[start].second)) ans[start] = lv;
+        auto [u, v] = queries[start];
+        if (u >= 0) ans[start] = (uf.find(u) == uf.find(v));
 	} else {
-		int mid = (start + end) / 2;
+		int mid = (start + end) >> 1;
 		dnc(node * 2, start, mid);
 		dnc(node * 2 + 1, mid + 1, end);
 	}
@@ -75,14 +78,13 @@ void dnc(int node, int start, int end) {
 int N, Q;
 
 void solve() {
-    uf = UF {N};
-
-    ans = vector<int>(Q, -1);
-    int h = (int)ceil(log2(Q));
-	int tree_size = (1 << (h + 1));
-    tree.resize(tree_size);
-
-    for (auto& i: bridges) update(1, 0, q - 1);
-
-    dnc(1, 0, q - 1);
+    assert(queries.size() == Q);
+    uf = UF(N);
+    ans.assign(Q, -1);
+    tree.assign(4ULL * Q, {});
+    if (Q == 0) return;
+    for (const Edge& e : bridges) {
+        if (e.s <= e.e) update(1, 0, Q - 1, e);
+    }
+    dnc(1, 0, Q - 1);
 }

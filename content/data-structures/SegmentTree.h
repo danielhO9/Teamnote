@@ -10,7 +10,8 @@ struct SegmentTree {
 
 	ll merge(ll a, ll b) { return a + b; }
 	SegmentTree() = default;
-	SegmentTree(int sz): SegmentTree(vector<ll>(sz, 0)) {} // TODO
+	SegmentTree(int sz)
+	  : SegmentTree(vector<ll>(sz, 0)) {} // TODO
 	SegmentTree(const vector<ll>& a) {
 		sz = a.size();
 		arr = a;
@@ -28,7 +29,8 @@ struct SegmentTree {
 			tree[node] = merge(tree[node * 2], tree[node * 2 + 1]);
 		}
 	}
-	void update(int node, int start, int end, int index, ll val) {
+	void update(int node, int start, int end,
+	  int index, ll val) {
 		if (index < start || index > end) return;
 		if (start == end) {
 			arr[index] += val;
@@ -48,6 +50,8 @@ struct SegmentTree {
 		ll rsum = query(node * 2 + 1, mid + 1, end, left, right);
 		return merge(lsum, rsum);
 	}
-	void update(int index, ll val) { update(1, 0, sz - 1, index, val); }
-	ll query(int left, int right) { return query(1, 0, sz - 1, left, right); }
+	void update(int index, ll val) {
+	  update(1, 0, sz - 1, index, val); }
+	ll query(int left, int right) {
+	  return query(1, 0, sz - 1, left, right); }
 };

@@ -42,13 +42,14 @@ void fwht_xor(vector<ll> &a, bool inv) {
     }
 }
 
-vector<ll> convolute(vector<ll>& A, vector<ll>& B) {
+vector<ll> convolute(const vector<ll>& A,
+  const vector<ll>& B) {
+    if (A.empty() || B.empty()) return {};
     vector<ll> a(A.begin(), A.end()), b(B.begin(), B.end());
 
-    ll n = max(a.size(), b.size());
-    ll i = 0;
-    while ((1 << i) < (n << 1)) i++;
-    n = 1 << i;
+    int n = 1;
+    while (n < a.size() || n < b.size()) n <<= 1;
+
     a.resize(n);
     b.resize(n);
 

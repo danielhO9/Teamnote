@@ -10,7 +10,8 @@ int sz[MAX_V];
 
 int getSize(int v, int p) {
     int& ret = sz[v]; ret = 1;
-    for (auto [u, _]: adj[v]) if (u != p && !vis[u]) ret += getSize(u, v);
+    for (auto [u, _]: adj[v])
+      if (u != p && !vis[u]) ret += getSize(u, v);
     return ret;
 }
 void getCent(int v, int p, int nsz, vector<int>& ret) {
@@ -35,6 +36,7 @@ int dnc(int v) {
 	int c = centroid(v, -1)[0]; vis[c] = true;
 	// compute
 
-    for (auto [u, _]: adj[c]) if (!vis[u]) ret = max(dnc(u), ret); // TODO
+    for (auto [u, _]: adj[c])
+      if (!vis[u]) ret = max(dnc(u), ret); // TODO
     return ret;
 }

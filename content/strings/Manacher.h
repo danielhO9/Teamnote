@@ -10,7 +10,9 @@ vector<int> manacher(const string& s) {
 	int r = -1, p = -1;
 	for (int i = 0; i < n; ++i) {
 		if (i < r) ret[i] = min(ret[2 * p - i], r - i);
-		while (i - ret[i] - 1 >= 0 && i + ret[i] + 1 < n && s[i - ret[i] - 1] == s[i + ret[i] + 1]) ++ret[i];
+		while (i - ret[i] - 1 >= 0 && i + ret[i] + 1 < n &&
+		       s[i - ret[i] - 1] == s[i + ret[i] + 1])
+		  ++ret[i];
 		if (r < i + ret[i]) {
 			r = i + ret[i];
 			p = i;

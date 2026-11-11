@@ -24,7 +24,9 @@ void fft(vector<ll>& a, bool inv) {
         if (i < j) swap(a[i], a[j]);
     }
     for (ll i = 1; i < n; i <<= 1) {
-        ll w = modpow(inv ? modpow(_X, _P - 2, _P) : _X, _P / i >> 1, _P);
+        ll w = modpow(
+          inv ? modpow(_X, _P - 2, _P) : _X,
+            _P / i >> 1, _P);
         for (ll j = 0; j < n; j += i << 1) {
             ll th = 1ll;
             for (ll k = 0; k < i; k++) {
